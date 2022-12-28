@@ -1,19 +1,17 @@
 package entities;
 
+import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.Entity;
 import org.hibernate.annotations.Table;
 
-import javax.persistence.*;
 import java.util.Collection;
 
 
 @Entity
 @Data
 @Table(appliesTo = "users")
-public class User {
+public class Users{
 
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
@@ -28,5 +26,14 @@ public class User {
     @JoinTable(name = "users_roles",
         joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+    private Collection<Roles> roles;
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

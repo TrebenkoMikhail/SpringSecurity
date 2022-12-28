@@ -3,13 +3,13 @@ package configs;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.wildfly.security.password.interfaces.BCryptPassword;
+import servecies.UserService;
 
-import java.beans.BeanProperty;
-
-@EnableWebSecurity
+@Configuration
+@WebSecurity
 @RequiredArgsConstructor
 @Slf4j
 @EnableGlobalMethodSecurity(prePostEnable = true, securedEnable = true, jsr250Enabled = true)
@@ -21,8 +21,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.autorizeRequests()
                 .antMatchers("/auth_page/**").authenticated()
                 .antMatchers("/user_info").authenticated()
-                .antMatchers("/admin/**").hasAnyRole("ADMIN", "SUPERADMIN")
-                .anyMatchers()
+                .antMatchers("/admin/**").hasAnyRole("ADMIN")
+                .antMatchers("/admin/**").hasAuthority("users")
+                .antMatchers("/superadmin/**").hasAnyRole("SUPERADMIN")
+                .anyMatchers("/superadmin/**").hasAuthority("create_user")
+                .anyMatchers("/superadmin/**").hasAuthority("users")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

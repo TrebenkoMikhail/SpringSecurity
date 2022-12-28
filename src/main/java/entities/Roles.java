@@ -1,20 +1,19 @@
 package entities;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import lombok.Data;
-import org.hibernate.annotations.Entity;
 import org.hibernate.annotations.Table;
+import reposetories.RoleRepository;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
 @Data
 @Table(appliesTo = "roles")
-public class Role {
-    @Id
+public class Roles implements RoleRepository {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
